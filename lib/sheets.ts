@@ -2,11 +2,19 @@ import { google } from "googleapis";
 
 const HEADER_ROW = ["User ID", "Name", "Mobile"];
 
+function getPrivateKey(): string {
+  const raw = process.env.GOOGLE_PRIVATE_KEY ?? "";
+  // Strip accidental surrounding quotes (common Vercel paste mistake)
+  const stripped = raw.replace(/^["']|["']$/g, "");
+  // Convert literal \n sequences to actual newlines
+  return stripped.replace(/\\n/g, "\n");
+}
+
 function getAuth() {
   return new google.auth.GoogleAuth({
     credentials: {
       client_email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
-      private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      private_key: getPrivateKey(),
     },
     scopes: ["https://www.googleapis.com/auth/spreadsheets"],
   });
