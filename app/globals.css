@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #080c10;
+  color: white;
+  font-family: 'Space Mono', monospace;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Hexagonal background grid */
+.hex-grid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100' viewBox='0 0 56 100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zm0-2l26-15V18L28 2 2 18v31l26 15z' fill='%23FF6B00' fill-opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* Scanning beam animation */
+@keyframes scan {
+  0%   { top: 0; }
+  50%  { top: calc(100% - 2px); }
+  100% { top: 0; }
+}
+
+.animate-scan {
+  animation: scan 2s linear infinite;
+  position: absolute;
+}
+
+/* html5-qrcode overrides — force single full-size video, hide all internal chrome */
+.qr-container {
+  position: relative;
+}
+
+#qr-reader {
+  border: none !important;
+  padding: 0 !important;
+}
+
+#qr-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+
+/* Hide the shaded scan-region overlay (the element that caused the "double feed") */
+#qr-reader__scan_region {
+  width: 100% !important;
+  height: 100% !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+#qr-reader__scan_region img,
+#qr-reader__scan_region > div {
+  display: none !important;
+}
+
+/* Hide controls bar */
+#qr-reader__dashboard,
+#qr-reader__header_message,
+#qr-reader__status_span {
+  display: none !important;
+}
+
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+.font-mono {
+  font-family: 'Space Mono', monospace;
+}
