@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Props {
   name: string;
@@ -9,6 +9,8 @@ interface Props {
 
 export default function SuccessScreen({ name, onReset }: Props) {
   const [countdown, setCountdown] = useState(5);
+  const onResetRef = useRef(onReset);
+  useEffect(() => { onResetRef.current = onReset; });
 
   const now = new Date();
   const dateStr = now.toLocaleDateString("en-IN", {
@@ -27,14 +29,14 @@ export default function SuccessScreen({ name, onReset }: Props) {
       setCountdown((c) => {
         if (c <= 1) {
           clearInterval(interval);
-          onReset();
+          onResetRef.current();
           return 0;
         }
         return c - 1;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [onReset]);
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-5 py-4">

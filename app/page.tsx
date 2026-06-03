@@ -66,7 +66,7 @@ function AttendanceApp() {
     }
   }, [autoMarkReturning]);
 
-  function handleRegistered(data: AttendResponse) {
+  const handleRegistered = useCallback((data: AttendResponse) => {
     if (data.userId && data.name) {
       const user: StoredUser = { userId: data.userId, name: data.name };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
@@ -77,12 +77,12 @@ function AttendanceApp() {
     } else {
       setScreen("success");
     }
-  }
+  }, []);
 
-  function handleReset() {
+  const handleReset = useCallback(() => {
     setAttendResult(null);
     setScreen("register");
-  }
+  }, []);
 
   const displayName = attendResult?.name ?? "";
 
